@@ -1,0 +1,117 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-image: url(chakufoods-white.jpg);
+    background-size: cover;
+    background-position: center;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh; /* Center vertically */
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+    background: white;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.logo {
+    width: 50px;
+    height:auto;
+    margin-right: 10px;
+
+}
+
+.main-title {
+    font-size: 36px;
+    color: #4CAF50;
+}
+
+.custom-file-upload {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+#file-upload {
+    display: none;
+}
+
+
+.form-container {
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+
+}
+
+
+.hand-icon {
+    width: 30px; /* Set size of the hand icon */
+    height: auto;
+    margin: 0 140px;
+    animation: bounce 1s infinite;
+}
+
+/* Animation keyframes for the bounce effect */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0); /* Original position */
+    }
+    50% {
+        transform: translateY(-10px); /* Move up */
+    }
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+label {
+    font-size: 14px;
+    color: #555;
+}
+
+input[type="file"] {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+input[type="submit"] {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+#loading {
+    font-size: 18px;
+    color: #FF6347;
+}
