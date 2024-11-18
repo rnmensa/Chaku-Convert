@@ -1,7 +1,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-image: url(chakufoods-white.jpg);
+    background-image: url("{ url_for('static', filename='images/chakufoods-white.jpg')}");
     background-size: cover;
     background-position: center;
     background-color: #f4f4f4;
@@ -45,6 +45,30 @@ h1 {
     gap: 10px;
     margin-top: 10px;
 }
+
+.custom-file-button {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 14px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+}
+
+.custom-file-button :hover {
+    background-color: #45a049;
+}
+
+#file-name {
+    margin-left: 10px;
+    font-size: 14px;
+    color:#333
+}
+
+
 
 #file-upload {
     display: none;

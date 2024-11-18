@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Excel to KML Converter</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
-<body>
+<body style="background-image: url('{{ url_for('static', filename='images/chakufoods-white.jpg') }}');">
     <div class="header-container">
-        <img src="chakufoods-white.jpg" alt="Chaku Logo" class="logo">
+        <img src="{{ url_for('static', filename='images/chakufoods-white.jpg') }}" alt="Chaku Logo" class="logo">
         <h1 class="main-title">Chaku Convert</h1>
     </div>
 
@@ -17,7 +17,7 @@
     <div class="form-container">
         <h2>Upload your desired Excel File here</h2>
         <form action="/" method="POST" enctype="multipart/form-data">
-        <img src="pngwing.com.png" alt="Hand pointing down" class="hand-icon">
+        <img src="{{ url_for('static', filename='images/pngwing.com.png') }}" alt="Hand pointing down" class="hand-icon">
 
 
         <div class="custom-file-upload">
@@ -30,6 +30,6 @@
     </div>
     <div id="loading" style="display:none;">Converting... Please wait.</div>
 
-    <script src="script.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
