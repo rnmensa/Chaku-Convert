@@ -28,7 +28,7 @@ def convert_excel_to_kml(file_path):
     data = pd.read_excel(file_path)
 
     # Initialise KML object
-    kml = simplekml.KML()
+    kml = simplekml.Kml()
 
     # Define a style for polygons
     polystyle = simplekml.Style()
@@ -36,7 +36,7 @@ def convert_excel_to_kml(file_path):
 
     # Loop through each row and create a polygon for each farm
     for index, row in data.iterrows():
-        farmer_name = row['full-name']
+        farmer_name = row['full_name']
         geopins_raw = row['geographic_boundaries']
         coordinates = parse_coordinates(geopins_raw)
 
@@ -79,4 +79,5 @@ def upload_file():
     return render_template('index.html')
 
 if __name__ == '__main__':
+    app.run(host='192.168.100.59:5000')
     app.run(debug=True)
