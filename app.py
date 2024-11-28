@@ -53,18 +53,13 @@ def convert_excel_to_kml(file_path):
 #Flask route to handle file upload and conversion
 @app.route('/', methods =['GET', 'POST'])
 def upload_file():
-
-    error_message = None 
-
-
     if request.method == 'POST':
         #Get the uploaded file
         uploaded_file = request.files.get('file')
 
-        if uploaded_file is None or uploaded_file.filename == "":
+        if uploaded_file is None:
             # Return a message if no file is uploaded
-            error_message = "No file uploaded. Please select a file."
-            return render_template('index.html', error_message=error_message)
+            return "No file uploaded. Please select a file.", 400
         
 
         if uploaded_file.filename.endswith('.xlsx'):
@@ -81,7 +76,7 @@ def upload_file():
             # If file is not an Excel file, return an error message
         return "Invalid file format.Please upload a .xlsx file", 400
         
-    return render_template('index.html', error_message=error_message)
+    return render_template('index.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
