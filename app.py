@@ -24,6 +24,9 @@ def parse_coordinates(coordinates_str):
     return geopins
 
 def convert_excel_to_kml(file_path):
+
+    base_name = os.path.splitext(os.path.basename(file_path))[0]
+
     # Read the Excel file
     data = pd.read_excel(file_path)
 
@@ -34,32 +37,50 @@ def convert_excel_to_kml(file_path):
     polystyle = simplekml.Style()
     polystyle.polystyle.color = '7d00ff00'
 
-    # Loop through each row and create a polygon for each farm
+    pinstyle = simplekml.Style()
+    pinstyle.iconstyle.color = 'ff0000ff' 
+
+        # Loop through each row and process polygons and pins
     for index, row in data.iterrows():
         farmer_name = row['full_name']
-        geopins_raw = row['geographic_boundaries']
-        coordinates = parse_coordinates(geopins_raw)
+    
 
-        if coordinates:
-            pol = kml.newpolygon(name = farmer_name)
-            pol.outerboundaryis = coordinates
-            pol.style = polystyle
+ # Handle geographic boundaries for polygons
+        geopins_raw = row.get('geographic_boundaries')
+        if pd.notna(geopins_raw):
+            coordinates = parse_coordinates(geopins_raw)
+            if coordinates:
+                pol = kml.newpolygon(name=f"{farmer_name} - Boundary")
+                pol.outerboundaryis = coordinates
+                pol.style = polystyle
+        
+        # Handle land coordinates for red pins
+        land_coords_raw = row.get('land_coordinates')
+        if pd.notna(land_coords_raw):
+            land_coords = parse_coordinates(land_coords_raw)
+            for coord in land_coords:
+                pin = kml.newpoint(name=f"{farmer_name} - Marker", coords=[coord])
+                pin.style = pinstyle
 
-
-    kml_file_path = os.path.join(app.config['UPLOAD_FOLDER'], "somanya_farms.kml")
+    kml_file_path = os.path.join(app.config['UPLOAD_FOLDER'], f"{base_name}.kml")
     kml.save(kml_file_path)
     return kml_file_path
 
 #Flask route to handle file upload and conversion
 @app.route('/', methods =['GET', 'POST'])
 def upload_file():
+
+    error_message = None 
+
+
     if request.method == 'POST':
         #Get the uploaded file
         uploaded_file = request.files.get('file')
 
-        if uploaded_file is None:
+        if uploaded_file is None or uploaded_file.filename == "":
             # Return a message if no file is uploaded
-            return "No file uploaded. Please select a file.", 400
+            error_message = "No file uploaded. Please select a file."
+            return render_template('index.html', error_message=error_message)
         
 
         if uploaded_file.filename.endswith('.xlsx'):
@@ -76,7 +97,7 @@ def upload_file():
             # If file is not an Excel file, return an error message
         return "Invalid file format.Please upload a .xlsx file", 400
         
-    return render_template('index.html')
+    return render_template('index.html', error_message=error_message)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
