@@ -1,6 +1,27 @@
-document.querySelector('form').addEventListener('submit', function() {
-    document.getElementById('loading').style.display = 'block'; // Show loading message
+// Handle the form submission and show/hide the loading message
+document.getElementById('file-form').addEventListener('submit', function (event) {
+    const fileInput = document.getElementById('file-upload');
+    const errorMessage = document.getElementById('error-message');
+    const loadingMessage = document.getElementById('loading');
+
+    // Form validation: Check if a file is selected
+    if (!fileInput.files.length) {
+        // Prevent form submission if no file is selected
+        event.preventDefault();
+        errorMessage.style.display = 'block'; // Show error message
+        loadingMessage.style.display = 'none'; // Hide loading message (just in case)
+        return;
+    }
+   // Hide error message and show loading message
+    errorMessage.style.display = 'none';
+    loadingMessage.style.display = 'block';
+
+    // Optional: Hide the loading message after 3 seconds
+    setTimeout(() => {
+        loadingMessage.style.display = 'none';
+    }, 3000);
 });
+
 
 function displayFileName() {
     const fileInput = document.getElementById('file-upload');
@@ -8,20 +29,3 @@ function displayFileName() {
     document.getElementById('file-name').textContent = fileName;
 }
 
-// Function to handle the form validation
-document.getElementById('file-form').addEventListener('submit', function(event) {
-    var fileInput = document.getElementById('file-upload');
-    var errorMessage = document.getElementById('error-message');
-
-    // Check if no file is selected
-    if (!fileInput.files.length) {
-        // Prevent form submission
-        event.preventDefault();
-
-        // Display error message
-        errorMessage.style.display = 'block';
-    } else {
-        // Hide error message if a file is selected
-        errorMessage.style.display = 'none';
-    }
-});
